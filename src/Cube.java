@@ -9,15 +9,17 @@ public  class Cube {
     private final int indexCount;
 
     public Cube() {
+        // Each vertex has: position (x, y, z) + color (r, g, b)
         float[] verts = {
-                -0.5f, -0.5f, -0.5f,
-                0.5f, -0.5f, -0.5f,
-                0.5f,  0.5f, -0.5f,
-                -0.5f,  0.5f, -0.5f,
-                -0.5f, -0.5f,  0.5f,
-                0.5f, -0.5f,  0.5f,
-                0.5f,  0.5f,  0.5f,
-                -0.5f,  0.5f,  0.5f
+                // x, y, z,      r, g, b
+                -0.5f, -0.5f, -0.5f, 1f, 0f, 0f, // red
+                0.5f, -0.5f, -0.5f, 0f, 1f, 0f, // green
+                0.5f,  0.5f, -0.5f, 0f, 0f, 1f, // blue
+                -0.5f,  0.5f, -0.5f, 1f, 1f, 0f, // yellow
+                -0.5f, -0.5f,  0.5f, 1f, 0f, 1f, // magenta
+                0.5f, -0.5f,  0.5f, 0f, 1f, 1f, // cyan
+                0.5f,  0.5f,  0.5f, 1f, 0.5f, 0f, // orange
+                -0.5f,  0.5f,  0.5f, 0.5f, 0f, 1f  // violet
         };
 
         int[] inds = {
