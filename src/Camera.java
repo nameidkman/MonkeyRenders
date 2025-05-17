@@ -12,10 +12,26 @@ public class Camera {
     private double lastX = 400, lastY = 300;
     private final float speed = 0.05f;
     private final float sensitivity = 0.1f;
+    private boolean shiftPressed = false;
 
     public void processKeyboard(long window) {
         float[] right = GLUtils.cross(front, up);
         GLUtils.normalize(right);
+        boolean currentlyPressed = glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS;
+
+
+        // SHIFT just pressed
+        if (currentlyPressed && !shiftPressed) {
+            glfwSetCursorPosCallback(window, this::mouseCallback);
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+            shiftPressed = true;
+        } else if (!currentlyPressed && shiftPressed) {
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+            glfwSetCursorPosCallback(window, null);
+            shiftPressed = false;
+        }
+
+
 
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
             position[0] += front[0] * speed;
@@ -37,12 +53,12 @@ public class Camera {
             position[1] += right[1] * speed;
             position[2] += right[2] * speed;
         }
-        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-            position[1] += speed;
-        }
-        if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
-            position[1] -= speed;
-        }
+//        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+//            position[1] += speed;
+//        }
+//        if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+//            position[1] -= speed;
+//        }
     }
 
     public void mouseCallback(long window, double xpos, double ypos) {

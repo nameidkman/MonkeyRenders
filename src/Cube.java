@@ -7,7 +7,39 @@ public  class Cube {
     private final FloatBuffer vertices;
     private final IntBuffer indices;
     private final int indexCount;
+    private static final String vertexShaderSource = """
+			#version 330 core
+                 layout (location = 0) in vec3 aPos;
+                 layout (location = 1) in vec3 aColor;
+                
+                 out vec3 vertexColor;
+                
+                 uniform mat4 model;
+                 uniform mat4 view;
+                 uniform mat4 projection;
+                
+                 void main() {
+                     gl_Position = projection * view * model * vec4(aPos, 1.0);
+                     vertexColor = aColor;
+                 }
+		""";
 
+    private static final String fragmentShaderSource = """
+			#version 330 core
+                 in vec3 vertexColor;
+                 out vec4 FragColor;
+                
+                 void main() {
+                     FragColor = vec4(vertexColor, 1.0);
+                 }
+		""";
+
+    public static String returnVS(){
+        return vertexShaderSource;
+    }
+    public static String returnFS(){
+        return fragmentShaderSource;
+    }
     public Cube() {
         // Each vertex has: position (x, y, z) + color (r, g, b)
         float[] verts = {

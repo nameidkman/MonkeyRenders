@@ -46,14 +46,8 @@ public class GLUtils {
         };
     }
 
-    public static void setMatrixUniforms(ShaderProgram shader, Camera camera, int width, int height) {
-        float[] model = {
-                1, 0, 0, 0,
-                0, 1, 0, 0,
-                0, 0, 1, 0,
-                0, 0, 0, 1
-        };
-
+    // ✅ Custom: Accepts external model matrix
+    public static void setMatrixUniforms(ShaderProgram shader, Camera camera, int width, int height, float[] model) {
         float aspect = (float) width / height;
         float fov = (float) Math.toRadians(45);
         float zNear = 0.1f, zFar = 100.0f;
@@ -76,6 +70,38 @@ public class GLUtils {
         }
     }
 
+    // ✅ Translation matrix
+    public static float[] translate(float x, float y, float z) {
+        return new float[]{
+                1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, 1, 0,
+                x, y, z, 1
+        };
+    }
+
+    // 🆕 Optional: Scaling matrix
+    public static float[] scale(float x, float y, float z) {
+        return new float[]{
+                x, 0, 0, 0,
+                0, y, 0, 0,
+                0, 0, z, 0,
+                0, 0, 0, 1
+        };
+    }
+
+    // 🆕 Optional: Y-axis rotation matrix
+    public static float[] rotateY(float angleRadians) {
+        float cos = (float) Math.cos(angleRadians);
+        float sin = (float) Math.sin(angleRadians);
+        return new float[]{
+                cos, 0, sin, 0,
+                0, 1, 0, 0,
+                -sin, 0, cos, 0,
+                0, 0, 0, 1
+        };
+    }
+
     public static int createVAO(Cube cube) {
         int vao = glGenVertexArrays();
         int vbo = glGenBuffers();
@@ -89,21 +115,61 @@ public class GLUtils {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, cube.getIndices(), GL_STATIC_DRAW);
 
-        // Assume vbo and vao have been generated and bound
-        glVertexAttribPointer(0, 3, GL_FLOAT, false, 6 * Float.BYTES, 0);               // Position
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, 6 * Float.BYTES, 0);
         glEnableVertexAttribArray(0);
 
-        glVertexAttribPointer(1, 3, GL_FLOAT, false, 6 * Float.BYTES, 3 * Float.BYTES); // Color
+        glVertexAttribPointer(1, 3, GL_FLOAT, false, 6 * Float.BYTES, 3 * Float.BYTES);
         glEnableVertexAttribArray(1);
-
 
         glBindVertexArray(0);
         return vao;
     }
 
-    public static void initGLCapabilities(long window) {
-        org.lwjgl.opengl.GL.createCapabilities();
-        glfwSetFramebufferSizeCallback(window, (w, width, height) -> glViewport(0, 0, width, height));
+    public static int createVAO(Triangle triangle) {
+        int vao = glGenVertexArrays();
+        int vbo = glGenBuffers();
+        int ebo = glGenBuffers();
+
+        glBindVertexArray(vao);
+
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBufferData(GL_ARRAY_BUFFER, triangle.getVertices(), GL_STATIC_DRAW);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, triangle.getIndices(), GL_STATIC_DRAW);
+
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, 6 * Float.BYTES, 0);
+        glEnableVertexAttribArray(0);
+
+        glVertexAttribPointer(1, 3, GL_FLOAT, false, 6 * Float.BYTES, 3 * Float.BYTES);
+        glEnableVertexAttribArray(1);
+
+        glBindVertexArray(0);
+        return vao;
+    }
+    public static int createVAO(Sphere sphere) {
+        int vao = glGenVertexArrays();
+        int vbo = glGenBuffers();
+        int ebo = glGenBuffers();
+
+        glBindVertexArray(vao);
+
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBufferData(GL_ARRAY_BUFFER, sphere.getVertices(), GL_STATIC_DRAW);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sphere.getIndices(), GL_STATIC_DRAW);
+
+        // Set the vertex position attribute (location 0)
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, 6 * Float.BYTES, 0); // 3 for position (x, y, z)
+        glEnableVertexAttribArray(0);
+
+        // Set the vertex color attribute (location 1)
+        glVertexAttribPointer(1, 3, GL_FLOAT, false, 6 * Float.BYTES, 3 * Float.BYTES); // 3 for color (r, g, b)
+        glEnableVertexAttribArray(1);
+
+        glBindVertexArray(0);
+        return vao;
     }
 
     public static long createWindow(String title) {
@@ -113,6 +179,11 @@ public class GLUtils {
         glfwSwapInterval(1);
         glfwShowWindow(window);
         return window;
+    }
+
+    public static void initGLCapabilities(long window) {
+        org.lwjgl.opengl.GL.createCapabilities();
+        glfwSetFramebufferSizeCallback(window, (w, width, height) -> glViewport(0, 0, width, height));
     }
 
     public static void initGLFW(int width, int height) {
