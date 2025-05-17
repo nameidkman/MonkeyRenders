@@ -89,8 +89,13 @@ public class GLUtils {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, cube.getIndices(), GL_STATIC_DRAW);
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, false, 3 * Float.BYTES, 0);
+        // Assume vbo and vao have been generated and bound
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, 6 * Float.BYTES, 0);               // Position
         glEnableVertexAttribArray(0);
+
+        glVertexAttribPointer(1, 3, GL_FLOAT, false, 6 * Float.BYTES, 3 * Float.BYTES); // Color
+        glEnableVertexAttribArray(1);
+
 
         glBindVertexArray(0);
         return vao;
