@@ -15,6 +15,8 @@ public class Camera {
     private final float speed = 0.05f;
     private final float sensitivity = 0.1f;
     private boolean shiftPressed = false;
+    private Frame frame;
+    private boolean frameOpen = false;
 
 
     public void processKeyboard(long window) {
@@ -34,8 +36,17 @@ public class Camera {
         }
 
 
-
-
+        if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS && !frameOpen) {
+            // If the right-click is pressed and no frame is open, create a new frame
+            SwingUtilities.invokeLater(() -> {
+                frame = new Frame();  // Make sure Frame is created safely on the EDT
+            });
+            frameOpen = true; // Set the flag to true to indicate a frame is open
+        }
+        // You can release the frame when the right mouse button is released
+        if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_RELEASE) {
+            frameOpen = false;
+        }
 
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
             position[0] += front[0] * speed;
