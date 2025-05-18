@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 import static java.lang.Math.*;
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -14,11 +16,11 @@ public class Camera {
     private final float sensitivity = 0.1f;
     private boolean shiftPressed = false;
 
+
     public void processKeyboard(long window) {
         float[] right = GLUtils.cross(front, up);
         GLUtils.normalize(right);
-        boolean currentlyPressed = glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS;
-
+        boolean currentlyPressed = glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS;
 
         // SHIFT just pressed
         if (currentlyPressed && !shiftPressed) {
@@ -30,6 +32,8 @@ public class Camera {
             glfwSetCursorPosCallback(window, null);
             shiftPressed = false;
         }
+
+
 
 
 
@@ -48,17 +52,18 @@ public class Camera {
             position[1] -= right[1] * speed;
             position[2] -= right[2] * speed;
         }
+
         if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
             position[0] += right[0] * speed;
             position[1] += right[1] * speed;
             position[2] += right[2] * speed;
         }
-//        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-//            position[1] += speed;
-//        }
-//        if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
-//            position[1] -= speed;
-//        }
+        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+            position[1] += speed;
+        }
+        if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+            position[1] -= speed;
+        }
     }
 
     public void mouseCallback(long window, double xpos, double ypos) {

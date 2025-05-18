@@ -181,6 +181,8 @@ public class GLUtils {
         return window;
     }
 
+
+
     public static void initGLCapabilities(long window) {
         org.lwjgl.opengl.GL.createCapabilities();
         glfwSetFramebufferSizeCallback(window, (w, width, height) -> glViewport(0, 0, width, height));

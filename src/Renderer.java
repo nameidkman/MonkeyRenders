@@ -24,6 +24,7 @@ public class Renderer {
     private Sphere sphere;
     private int vaoS;
 
+
     public void run() {
         init();
         loop();
@@ -52,6 +53,9 @@ public class Renderer {
         vaoS = GLUtils.createVAO(sphere);
 
         glEnable(GL_DEPTH_TEST);  // Enable depth testing for 3D rendering
+
+
+
     }
 
     private void loop() {
@@ -77,12 +81,13 @@ public class Renderer {
             glBindVertexArray(vaoT);
             glDrawElements(GL_TRIANGLES, triangle.getIndexCount(), GL_UNSIGNED_INT, 0);
 
-            // --- Draw Second Cube ---
             GLUtils.setMatrixUniforms(shader, input.getCamera(), SCR_WIDTH, SCR_HEIGHT, GLUtils.translate(2.0f, 0.0f, 0.0f));  // Second Cube shifted to right
 
             // Draw another sphere at a different position (to the right)
             glBindVertexArray(vaoS);
             glDrawElements(GL_TRIANGLES, sphere.getIndexCount(), GL_UNSIGNED_INT, 0);
+
+
 
             // Swap buffers and poll for events
             glfwSwapBuffers(window);
