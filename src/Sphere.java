@@ -39,12 +39,15 @@ public class Sphere {
     public static String returnVS(){
         return vertexShaderSource;
     }
+
     public static String returnFS(){
         return fragmentShaderSource;
     }
 
-    public Sphere(int stacks, int slices) {
-        float radius = 1.0f;
+    public Sphere(int stacks, int slices, float size) {
+        // Use the given size for the radius
+        float radius = size;
+
         float[] verts = new float[(stacks + 1) * (slices + 1) * 6];
         int[] inds = new int[stacks * slices * 6];
 

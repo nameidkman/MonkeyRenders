@@ -40,18 +40,20 @@ public  class Cube {
     public static String returnFS(){
         return fragmentShaderSource;
     }
-    public Cube() {
-        // Each vertex has: position (x, y, z) + color (r, g, b)
+    public Cube(float size) {
+        // Adjust the size based on the input size
+        float halfSize = size / 2.0f;
+
         float[] verts = {
                 // x, y, z,      r, g, b
-                -0.5f, -0.5f, -0.5f, 1f, 0f, 0f, // red
-                0.5f, -0.5f, -0.5f, 0f, 1f, 0f, // green
-                0.5f,  0.5f, -0.5f, 0f, 0f, 1f, // blue
-                -0.5f,  0.5f, -0.5f, 1f, 1f, 0f, // yellow
-                -0.5f, -0.5f,  0.5f, 1f, 0f, 1f, // magenta
-                0.5f, -0.5f,  0.5f, 0f, 1f, 1f, // cyan
-                0.5f,  0.5f,  0.5f, 1f, 0.5f, 0f, // orange
-                -0.5f,  0.5f,  0.5f, 0.5f, 0f, 1f  // violet
+                -halfSize, -halfSize, -halfSize, 1f, 0f, 0f, // red
+                halfSize, -halfSize, -halfSize, 0f, 1f, 0f, // green
+                halfSize, halfSize, -halfSize, 0f, 0f, 1f, // blue
+                -halfSize, halfSize, -halfSize, 1f, 1f, 0f, // yellow
+                -halfSize, -halfSize, halfSize, 1f, 0f, 1f, // magenta
+                halfSize, -halfSize, halfSize, 0f, 1f, 1f, // cyan
+                halfSize, halfSize, halfSize, 1f, 0.5f, 0f, // orange
+                -halfSize, halfSize, halfSize, 0.5f, 0f, 1f  // violet
         };
 
         int[] inds = {
@@ -71,6 +73,7 @@ public  class Cube {
 
         indexCount = inds.length;
     }
+
 
     public FloatBuffer getVertices() {
         return vertices;

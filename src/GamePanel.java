@@ -40,6 +40,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     Rectangle selectedSlider = null;
 
+
+
+
+
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenX, screenY));
         this.setBackground(Color.BLACK);
@@ -82,7 +86,31 @@ public class GamePanel extends JPanel implements Runnable {
                         makeThing = true;
                         mainMenu = true;
                         makeCube = false;
-
+                        MainApp.renderer.queueAddShape(sizeValue/10f, xOffset/2.0f, yOffset/2.0f, zOffset/2.0f, "Cube");
+                    }
+                }
+                if(makePyramid){
+                    if (sizeSliderBar.contains(p)) selectedSlider = sizeSliderBar;
+                    else if (xSliderBar.contains(p)) selectedSlider = xSliderBar;
+                    else if (ySliderBar.contains(p)) selectedSlider = ySliderBar;
+                    else if (zSliderBar.contains(p)) selectedSlider = zSliderBar;
+                    else if (make.contains(p)){
+                        makeThing = true;
+                        mainMenu = true;
+                        makePyramid = false;
+                        MainApp.renderer.queueAddShape(sizeValue/10f, xOffset/2.0f, yOffset/2.0f, zOffset/2.0f, "triangle");
+                    }
+                }
+                    if(makeSphere){
+                    if (sizeSliderBar.contains(p)) selectedSlider = sizeSliderBar;
+                    else if (xSliderBar.contains(p)) selectedSlider = xSliderBar;
+                    else if (ySliderBar.contains(p)) selectedSlider = ySliderBar;
+                    else if (zSliderBar.contains(p)) selectedSlider = zSliderBar;
+                    else if (make.contains(p)){
+                        makeThing = true;
+                        mainMenu = true;
+                        makeSphere = false;
+                        MainApp.renderer.queueAddShape(sizeValue, xOffset/2.0f, yOffset/2.0f, zOffset/2.0f, "sphere");
                     }
                 }
             }
@@ -210,19 +238,70 @@ public class GamePanel extends JPanel implements Runnable {
         // Pyramid Mode Rendering
         if (makePyramid) {
             g2.setColor(Color.BLACK);
-            g2.fillRect(0, 0, screenX, screenY);
-            g2.setColor(Color.ORANGE);
-            g2.setFont(new Font("Arial", Font.BOLD, 24));
-            g2.drawString("Pyramid mode - work in progress", 100, 100);
+            g2.fillRect(0, 0, screenX, screenY); // Clear screen first
+            drawBackgroundGrid(g2);              // Then draw the grid
+
+            // Draw Cube as a Placeholder
+            g2.setColor(Color.WHITE);
+            // Define the three points for the triangle
+            int[] xPoints = {screenX / 2, screenX / 2 - sizeValue / 2, screenX / 2 + sizeValue / 2};
+            int[] yPoints = {screenY / 2 - sizeValue / 2, screenY / 2 + sizeValue / 2, screenY / 2 + sizeValue / 2};
+
+            // Draw the triangle using fillPolygon
+            g2.fillPolygon(xPoints, yPoints, 3);
+
+            // Draw Sliders
+            g2.setFont(new Font("Arial", Font.BOLD, 18));
+            g2.setColor(Color.WHITE);
+            g2.drawString("Size " + sizeValue, sizeSliderBar.x + sizeSliderBar.width + 10, sizeSliderBar.y + 15);
+            g2.drawString("X " + xOffset, xSliderBar.x + xSliderBar.width + 10, xSliderBar.y + 15);
+            g2.drawString("Y "  + yOffset, ySliderBar.x + ySliderBar.width + 10, ySliderBar.y + 15);
+            g2.drawString("Z " + zOffset, zSliderBar.x + zSliderBar.width + 10, zSliderBar.y + 15);
+
+            // Draw Sliders themselves
+            drawSlider(g2, sizeSliderBar, sizeValue);
+            drawSlider(g2, xSliderBar, xOffset + 50);
+            drawSlider(g2, ySliderBar, yOffset + 50);
+            drawSlider(g2, zSliderBar, zOffset + 50);
+
+            g2.setColor(Color.WHITE);
+            g2.fill(make);
+            g2.setFont(new Font("Arial", Font.BOLD, 18));
+            g2.setColor(Color.BLACK);
+            g2.drawString("Make" , make.x + 20  , make.y + 30 );
+
         }
 
         // Sphere Mode Rendering
         if (makeSphere) {
             g2.setColor(Color.BLACK);
-            g2.fillRect(0, 0, screenX, screenY);
-            g2.setColor(Color.CYAN);
-            g2.setFont(new Font("Arial", Font.BOLD, 24));
-            g2.drawString("Sphere mode - work in progress", 100, 100);
+            g2.fillRect(0, 0, screenX, screenY); // Clear screen first
+            drawBackgroundGrid(g2); // draw the grid
+
+
+            g2.setColor(Color.WHITE);
+            g2.fillOval(screenX / 2 - sizeValue / 2, screenY / 2 - sizeValue / 2, sizeValue, sizeValue); // Circle
+
+            // Draw Sliders
+            g2.setFont(new Font("Arial", Font.BOLD, 18));
+            g2.setColor(Color.WHITE);
+            g2.drawString("Size " + sizeValue, sizeSliderBar.x + sizeSliderBar.width + 10, sizeSliderBar.y + 15);
+            g2.drawString("X " + xOffset, xSliderBar.x + xSliderBar.width + 10, xSliderBar.y + 15);
+            g2.drawString("Y "  + yOffset, ySliderBar.x + ySliderBar.width + 10, ySliderBar.y + 15);
+            g2.drawString("Z " + zOffset, zSliderBar.x + zSliderBar.width + 10, zSliderBar.y + 15);
+
+            // Draw Sliders themselves
+            drawSlider(g2, sizeSliderBar, sizeValue);
+            drawSlider(g2, xSliderBar, xOffset + 50);
+            drawSlider(g2, ySliderBar, yOffset + 50);
+            drawSlider(g2, zSliderBar, zOffset + 50);
+
+            g2.setColor(Color.WHITE);
+            g2.fill(make);
+            g2.setFont(new Font("Arial", Font.BOLD, 18));
+            g2.setColor(Color.BLACK);
+            g2.drawString("Make" , make.x + 20  , make.y + 30 );
+
         }
     }
 

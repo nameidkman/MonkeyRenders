@@ -11,8 +11,13 @@
 
 
 public class MainApp {
+    public static Renderer renderer = new Renderer();
+
     public static void main(String[] args) {
-        Renderer renderer = new Renderer();
-        renderer.run();
+
+        renderer.run(() -> {
+            renderer.queueAddShape(1.0f, 0f, 0f, 0f, "Cube");
+        });
+
     }
 }

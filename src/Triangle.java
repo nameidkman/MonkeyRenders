@@ -45,33 +45,31 @@ public class Triangle {
         return fragmentShaderSource;
     }
 
-    public Triangle() {
+    public Triangle(float size) {
 
 
+
+        float halfSize = size / 2.0f;
 
         // Each vertex: x, y, z, r, g, b
         float[] verts = {
                 // Base vertices (square)
-                -0.5f, 0.0f, -0.5f,   1f, 0f, 0f, // 0: back-left (red)
-                0.5f, 0.0f, -0.5f,   0f, 1f, 0f, // 1: back-right (green)
-                0.5f, 0.0f,  0.5f,   0f, 0f, 1f, // 2: front-right (blue)
-                -0.5f, 0.0f,  0.5f,   1f, 1f, 0f, // 3: front-left (yellow)
+                -halfSize, 0.0f, -halfSize,   1f, 0f, 0f, // 0: back-left (red)
+                halfSize, 0.0f, -halfSize,    0f, 1f, 0f, // 1: back-right (green)
+                halfSize, 0.0f, halfSize,     0f, 0f, 1f, // 2: front-right (blue)
+                -halfSize, 0.0f, halfSize,    1f, 1f, 0f, // 3: front-left (yellow)
 
                 // Apex vertex (top of the pyramid)
-                0.0f, 1.0f,  0.0f,   1f, 0f, 1f  // 4: top (magenta)
+                0.0f, size, 0.0f,   1f, 0f, 1f  // 4: top (magenta)
         };
 
-
         int[] inds = {
-                // Sides
-                0, 1, 4, // Back face
-                1, 2, 4, // Right face
-                2, 3, 4, // Front face
-                3, 0, 4, // Left face
-
-                // Base (2 triangles)
-                0, 1, 2,
-                2, 3, 0
+                0, 1, 4, // Side triangle: back-left, back-right, top
+                1, 2, 4, // Side triangle: back-right, front-right, top
+                2, 3, 4, // Side triangle: front-right, front-left, top
+                3, 0, 4, // Side triangle: front-left, back-left, top
+                0, 1, 2, // Base triangle: back-left, back-right, front-right
+                2, 3, 0  // Base triangle: front-right, front-left, back-left
         };
 
         vertices = BufferUtils.createFloatBuffer(verts.length);
