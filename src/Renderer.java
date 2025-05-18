@@ -25,12 +25,9 @@ public class Renderer {
 
     private List<ShapeContainer> renderables = new ArrayList<>();
 
-    // Thread-safe queue to defer shape additions to the OpenGL thread
+    // we need this in order to add shapes without breaking the opengl 
     private final ConcurrentLinkedQueue<Runnable> pendingShapeAdds = new ConcurrentLinkedQueue<>();
 
-    public Renderer() {
-        // No OpenGL calls here
-    }
 
     // === Shape container class ===
     private static class ShapeContainer {

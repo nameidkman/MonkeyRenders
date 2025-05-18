@@ -2,7 +2,7 @@
 /*
  * name: sai 
  * date: today 
- * des: the main class for the gui in the MonkeyRenders 
+ * des: the main class for the 2d gui in the MonkeyRenders 
  *
  */
 

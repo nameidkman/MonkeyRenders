@@ -1,3 +1,11 @@
+/*
+ * Name: Sai 
+ * Date: today 
+ * Des: this is for the GamePanel class. this make the menu through which we can add shapes 
+ */
+
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -54,7 +62,8 @@ public class GamePanel extends JPanel implements Runnable {
         this.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 Point p = e.getPoint();
-
+                
+                // for mouse so that we can i have buttons 
                 if (mainMenu) {
                     if (cube.contains(p)) {
                         makeCube = true;
@@ -76,19 +85,25 @@ public class GamePanel extends JPanel implements Runnable {
                         System.out.println("Pyramid selected");
                     }
                 }
-
+                
+                // if they were to select one of the rect and then try to make an object
                 if (makeCube) {
+                    // this if for the sliders 
                     if (sizeSliderBar.contains(p)) selectedSlider = sizeSliderBar;
                     else if (xSliderBar.contains(p)) selectedSlider = xSliderBar;
                     else if (ySliderBar.contains(p)) selectedSlider = ySliderBar;
                     else if (zSliderBar.contains(p)) selectedSlider = zSliderBar;
+                    // when they were to press the make button 
                     else if (make.contains(p)){
                         makeThing = true;
                         mainMenu = true;
                         makeCube = false;
+                        // add it to the queue and the print it on the screen
                         MainApp.renderer.queueAddShape(sizeValue/10f, xOffset/2.0f, yOffset/2.0f, zOffset/2.0f, "Cube");
                     }
                 }
+
+                // same code but for the prymid
                 if(makePyramid){
                     if (sizeSliderBar.contains(p)) selectedSlider = sizeSliderBar;
                     else if (xSliderBar.contains(p)) selectedSlider = xSliderBar;
@@ -101,7 +116,8 @@ public class GamePanel extends JPanel implements Runnable {
                         MainApp.renderer.queueAddShape(sizeValue/10f, xOffset/2.0f, yOffset/2.0f, zOffset/2.0f, "triangle");
                     }
                 }
-                    if(makeSphere){
+                // same code but for the sphere
+                if(makeSphere){
                     if (sizeSliderBar.contains(p)) selectedSlider = sizeSliderBar;
                     else if (xSliderBar.contains(p)) selectedSlider = xSliderBar;
                     else if (ySliderBar.contains(p)) selectedSlider = ySliderBar;
@@ -114,13 +130,14 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                 }
             }
-
+        
             public void mouseReleased(MouseEvent e) {
                 selectedSlider = null;
             }
         });
 
         this.addMouseMotionListener(new MouseAdapter() {
+            // function for the sliders
             public void mouseDragged(MouseEvent e) {
                 if (selectedSlider != null) {
                     int mouseX = e.getX();
@@ -129,7 +146,7 @@ public class GamePanel extends JPanel implements Runnable {
 
                     int relativeX = Math.max(0, Math.min(mouseX - sliderX, maxWidth));
                     int value = (int) ((relativeX / (double) maxWidth) * 100);
-
+                    // basic thing for making the sliders 
                     if (selectedSlider == sizeSliderBar) sizeValue = value;
                     else if (selectedSlider == xSliderBar) xOffset = value - 50; // center around 0
                     else if (selectedSlider == ySliderBar) yOffset = value - 50;
@@ -145,7 +162,8 @@ public class GamePanel extends JPanel implements Runnable {
         thread = new Thread(this);
         thread.start();
     }
-
+    
+    // loop
     @Override
     public void run() {
         double drawInterval = 1000000000 / FPS;
@@ -168,16 +186,18 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        // Game logic here
     }
+    
 
+    // drawing everythijng on the screen
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         drawBackgroundGrid(g2);
         drawPlayer(g2);
     }
-
+    
+    // making the background into a grid pattern why cuz why not
     private void drawBackgroundGrid(Graphics2D g2) {
         g2.setColor(new Color(50, 50, 50));
         for (int x = 0; x < screenX; x += tileSize) {
@@ -187,8 +207,12 @@ public class GamePanel extends JPanel implements Runnable {
             g2.drawLine(0, y, screenX, y);
         }
     }
-
+    
+    // drawing the shapes
     private void drawPlayer(Graphics2D g2) {
+
+
+        // makign the main menu(thing which it is going to have the option to create are Cube, prymid, Sphere)
         if (mainMenu) {
             g2.setColor(Color.WHITE);
             g2.fill(cube);
@@ -304,14 +328,17 @@ public class GamePanel extends JPanel implements Runnable {
 
         }
     }
+    
 
+    // drawing the slider
+    // basically makes 4 rectangle to make the slider nd rull it according to it
     private void drawSlider(Graphics2D g2, Rectangle sliderBar, int value) {
         int knobWidth = 10;
         int barX = sliderBar.x;
         int barY = sliderBar.y;
         int barWidth = sliderBar.width;
         int barHeight = sliderBar.height;
-
+        
         g2.setColor(Color.GRAY);
         g2.fillRect(barX, barY, barWidth, barHeight);
 

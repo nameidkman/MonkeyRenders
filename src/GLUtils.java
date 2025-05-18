@@ -46,7 +46,7 @@ public class GLUtils {
         };
     }
 
-    // ✅ Custom: Accepts external model matrix
+    //  Custom: Accepts external model matrix
     public static void setMatrixUniforms(ShaderProgram shader, Camera camera, int width, int height, float[] model) {
         float aspect = (float) width / height;
         float fov = (float) Math.toRadians(45);
@@ -69,36 +69,13 @@ public class GLUtils {
             glUniformMatrix4fv(glGetUniformLocation(programID, "projection"), false, stack.floats(projection));
         }
     }
-
-    // ✅ Translation matrix
+    //  Translation matrix
     public static float[] translate(float x, float y, float z) {
         return new float[]{
                 1, 0, 0, 0,
                 0, 1, 0, 0,
                 0, 0, 1, 0,
                 x, y, z, 1
-        };
-    }
-
-    // 🆕 Optional: Scaling matrix
-    public static float[] scale(float x, float y, float z) {
-        return new float[]{
-                x, 0, 0, 0,
-                0, y, 0, 0,
-                0, 0, z, 0,
-                0, 0, 0, 1
-        };
-    }
-
-    // 🆕 Optional: Y-axis rotation matrix
-    public static float[] rotateY(float angleRadians) {
-        float cos = (float) Math.cos(angleRadians);
-        float sin = (float) Math.sin(angleRadians);
-        return new float[]{
-                cos, 0, sin, 0,
-                0, 1, 0, 0,
-                -sin, 0, cos, 0,
-                0, 0, 0, 1
         };
     }
 
@@ -170,29 +147,5 @@ public class GLUtils {
 
         glBindVertexArray(0);
         return vao;
-    }
-
-    public static long createWindow(String title) {
-        long window = glfwCreateWindow(800, 600, title, NULL, NULL);
-        if (window == NULL) throw new RuntimeException("Failed to create GLFW window");
-        glfwMakeContextCurrent(window);
-        glfwSwapInterval(1);
-        glfwShowWindow(window);
-        return window;
-    }
-
-
-
-    public static void initGLCapabilities(long window) {
-        org.lwjgl.opengl.GL.createCapabilities();
-        glfwSetFramebufferSizeCallback(window, (w, width, height) -> glViewport(0, 0, width, height));
-    }
-
-    public static void initGLFW(int width, int height) {
-        if (!glfwInit()) throw new IllegalStateException("Unable to initialize GLFW");
-
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     }
 }
