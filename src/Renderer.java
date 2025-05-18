@@ -25,6 +25,33 @@ public class Renderer {
     private int vaoS;
 
 
+
+    // Shape settings from Swing
+    private float size;
+    private float xOffset;
+    private float yOffset;
+    private float zOffset;
+    private String shape;
+
+
+    public Renderer() {
+        this.size = 1.0f;
+        this.xOffset = 0;
+        this.yOffset = 0;
+        this.zOffset = 0;
+        this.shape = "Sphere";
+    }
+
+
+    public Renderer(float size, float xOffset, float yOffset, float zOffset, String shape) {
+        this.size = size;
+        this.xOffset = xOffset;
+        this.yOffset = yOffset;
+        this.zOffset = zOffset;
+        this.shape = shape;
+    }
+
+
     public void run() {
         init();
         loop();
