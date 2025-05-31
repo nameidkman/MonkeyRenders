@@ -1,1 +1,1 @@
-C:\Users\Saiansh\.jdks\openjdk-24.0.1\bin\java.exe -jar  out\artifacts\Run\3d.jar
+java -jar .\out\artifacts\3d_jar\3d.jar

@@ -1,18 +1,17 @@
-# One of the main thing 
-    Basically what happens is that you are going to have somehting like this 
-    There is the X,Z,Y axis instead of the other one cuz that is the more basic axis which are used in this. 
+# the basic premes for this is that its going to be able to render object in 3d space
+basically its a 3d render it going to be making a 3d obejcts 
 
-> [!IMPORTANT]
-> i was able to make it so that it working in terminal i just need to update the thing to the newest one and then it will
-    work Basically what i am doing is that 
-    C:\Users\Saiansh\.jdks\openjdk-22.0.1\bin\java.exe  -jar .\3d.jar
-    This is woring fine what i am doing in here is that i am running it with the same one as i have in the right thing
-    It i need to make it working with the other one all i would need to is that i would have to build it with the right one
-    And then it will work out
-    As well as that i have made a runme.bat file which works on my system which is nice to work with so yea
+in order to move around in this all you would need to do is us "wasd" for moving left shift to go down and then space to go up 
+if you would like to snap the camera and change the prespective you can aslo use the left ctrl in order to move your prespective easily 
 
-I am going to add a way to add texture and other shapes like tmr or somthing depending on how it works work
-which should be pretty sweet
+if you would like to run the render you are going to run the runme.bat and then after that you are going to be greated with a cube 
+if you would like to add some other shapes in there are well you can also do right click in order to make that happen 
 
-other than that i am maybe doing to add a ywa in which they can move the block around if i really want to 
-and yea making keybinding for whem they just want to move in the X, Y, Z axixs like yea
+after right click you are going to be greeated wiht another window using which you are able to justs add some other stuff as well like a 
+pyrmaid and a sphere in there as well
+
+
+for moving the obeject what you can do is that you can just left click on this and that will let you do that
+
+for animation what you are going to do is that you can have a mvoe object around in the 3d shapes and then 
+have have come back to their original posiiton this is going to hapen by pressing the "j"
