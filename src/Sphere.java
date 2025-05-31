@@ -1,13 +1,28 @@
+/*
+* Name: Sai
+* Date: Today
+* Des: Basically for sphere 
+*
+*/
+
+
+
+
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 public class Sphere {
+
+
+
     private final FloatBuffer vertices;
     private final IntBuffer indices;
     private final int indexCount;
+    
 
+    // vertex shader 
     private static final String vertexShaderSource = """
             #version 330 core
             
@@ -22,7 +37,9 @@ public class Sphere {
                 vertexColor = aColor;
             }
             """;
+    
 
+    // fragment shader
     private static final String fragmentShaderSource = """
             #version 330 core
             
@@ -36,6 +53,8 @@ public class Sphere {
             }
             """;
 
+
+    // helper function
     public static String returnVS(){
         return vertexShaderSource;
     }
@@ -114,6 +133,9 @@ public class Sphere {
         indexCount = inds.length;
     }
 
+
+
+    // more helper functions
     public FloatBuffer getVertices() {
         return vertices;
     }

@@ -1,5 +1,16 @@
-import org.lwjgl.BufferUtils;
+/*
+ *  Name: Sai 
+ *  Date: Today
+ *  Des: for the cube 
+ *
+ *
+ */
 
+
+
+
+
+import org.lwjgl.BufferUtils;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
@@ -7,6 +18,9 @@ public  class Cube {
     private final FloatBuffer vertices;
     private final IntBuffer indices;
     private final int indexCount;
+
+
+    // vertex shader
     private static final String vertexShaderSource = """
 			#version 330 core
                  layout (location = 0) in vec3 aPos;
@@ -23,7 +37,9 @@ public  class Cube {
                      vertexColor = aColor;
                  }
 		""";
+    
 
+    // fragment shader
     private static final String fragmentShaderSource = """
 			#version 330 core
                  in vec3 vertexColor;
@@ -33,7 +49,10 @@ public  class Cube {
                      FragColor = vec4(vertexColor, 1.0);
                  }
 		""";
+    
 
+
+    // get function for hte two
     public static String returnVS(){
         return vertexShaderSource;
     }
@@ -55,7 +74,9 @@ public  class Cube {
                 halfSize, halfSize, halfSize, 1f, 0.5f, 0f, // orange
                 -halfSize, halfSize, halfSize, 0.5f, 0f, 1f  // violet
         };
+        
 
+        // inds so that when make its not going to draw them again and again
         int[] inds = {
                 0, 1, 2, 2, 3, 0,
                 4, 5, 6, 6, 7, 4,
@@ -74,6 +95,9 @@ public  class Cube {
         indexCount = inds.length;
     }
 
+    
+
+    // helper funtion
 
     public FloatBuffer getVertices() {
         return vertices;

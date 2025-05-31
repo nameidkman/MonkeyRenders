@@ -1,9 +1,13 @@
+import org.joml.Matrix4f;
+
 import javax.swing.*;
 
 import static java.lang.Math.*;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class Camera {
+
+    // basic this 
     private float[] position = {0f, 0f, 3f};
     private float[] front = {0f, 0f, -1f};
     private float[] up = {0f, 1f, 0f};
@@ -18,7 +22,8 @@ public class Camera {
     private Frame frame;
     private boolean frameOpen = false;
 
-
+    
+    // for processKeyboard input
     public void processKeyboard(long window) {
         float[] right = GLUtils.cross(front, up);
         GLUtils.normalize(right);
@@ -47,7 +52,9 @@ public class Camera {
         if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_RELEASE) {
             frameOpen = false;
         }
+        
 
+        // for wasd
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
             position[0] += front[0] * speed;
             position[1] += front[1] * speed;
@@ -69,6 +76,7 @@ public class Camera {
             position[1] += right[1] * speed;
             position[2] += right[2] * speed;
         }
+        // for space
         if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
             position[1] += speed;
         }
@@ -76,8 +84,11 @@ public class Camera {
             position[1] -= speed;
         }
     }
+    
 
+    // for cub meaning how it goignt o handdle mouse input
     public void mouseCallback(long window, double xpos, double ypos) {
+
         if (firstMouse) {
             lastX = xpos;
             lastY = ypos;
@@ -92,7 +103,9 @@ public class Camera {
 
         xoffset *= sensitivity;
         yoffset *= sensitivity;
-
+        
+        // basic thingn to make it shoot when you are goinng to have it so that you can change prespecitive 
+        // using mouse
         yaw += xoffset;
         pitch += yoffset;
 
@@ -107,7 +120,9 @@ public class Camera {
         front[2] = (float) (sin(radYaw) * cos(radPitch));
         GLUtils.normalize(front);
     }
+    
 
+    // getting the view matrix
     public float[] getViewMatrix() {
         float[] center = {
                 position[0] + front[0],
@@ -116,8 +131,9 @@ public class Camera {
         };
         return GLUtils.lookAt(position, center, up);
     }
-
-    public float[] getPosition() {
-        return position;
+    public Matrix4f getViewMatrixJOML() {
+        return new Matrix4f().set(getViewMatrix());
     }
+
+
 }

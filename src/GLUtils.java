@@ -1,7 +1,16 @@
+
+/*
+ *  Name: Sai 
+ *  Date: Today
+ *  Des: for the utils 
+ *
+ *
+ */
+
+
+
 import org.lwjgl.system.MemoryStack;
-
 import java.nio.FloatBuffer;
-
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.glfw.GLFW.*;
@@ -10,6 +19,7 @@ import static org.lwjgl.system.MemoryUtil.*;
 
 public class GLUtils {
 
+    // compute the cross product of the two 3d vectors
     public static float[] cross(float[] a, float[] b) {
         return new float[]{
                 a[1]*b[2] - a[2]*b[1],
@@ -17,7 +27,9 @@ public class GLUtils {
                 a[0]*b[1] - a[1]*b[0]
         };
     }
+    
 
+    // normalize a 3d vector inplace
     public static void normalize(float[] vec) {
         float len = (float) Math.sqrt(vec[0]*vec[0] + vec[1]*vec[1] + vec[2]*vec[2]);
         if (len != 0.0f) {
@@ -26,16 +38,28 @@ public class GLUtils {
             vec[2] /= len;
         }
     }
+    
 
+    // getting the dot product for the thign
     public static float dot(float[] a, float[] b) {
         return a[0]*b[0] + a[1]*b[1] + a[2]*b[2];
     }
 
+
+    // creats a  lootat view matrix given camera parrameter 
     public static float[] lookAt(float[] eye, float[] center, float[] up) {
+
+
+        // compute forward vector from eye to center and normalizign it
         float[] f = {center[0] - eye[0], center[1] - eye[1], center[2] - eye[2]};
         normalize(f);
+
+
+        // compute the right vector as a cross proudct of forward and up vectors
         float[] s = cross(f, up);
         normalize(s);
+
+        // compute corrected up vector as cross product of right adn forward vector
         float[] u = cross(s, f);
 
         return new float[]{
@@ -79,22 +103,39 @@ public class GLUtils {
         };
     }
 
+
+
+    // creating the vao for the 3 different shapes, cube, sphere, trigangel
+
+
+
+
     public static int createVAO(Cube cube) {
+        // basic setup 
         int vao = glGenVertexArrays();
         int vbo = glGenBuffers();
         int ebo = glGenBuffers();
 
+
+        // binding the vao
         glBindVertexArray(vao);
 
+
+        // binding the vbo and ebo 
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBufferData(GL_ARRAY_BUFFER, cube.getVertices(), GL_STATIC_DRAW);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, cube.getIndices(), GL_STATIC_DRAW);
+        
 
+
+
+        // tellign what is the draw thing
         glVertexAttribPointer(0, 3, GL_FLOAT, false, 6 * Float.BYTES, 0);
         glEnableVertexAttribArray(0);
-
+        
+        // telling what are the color parrameters
         glVertexAttribPointer(1, 3, GL_FLOAT, false, 6 * Float.BYTES, 3 * Float.BYTES);
         glEnableVertexAttribArray(1);
 

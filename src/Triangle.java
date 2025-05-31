@@ -1,3 +1,12 @@
+/*
+ *  Name: Sai 
+ *  Date: Today
+ *  Des: this for the triangle class  
+ *
+ *
+ */
+
+
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
@@ -7,6 +16,9 @@ public class Triangle {
     private final FloatBuffer vertices;
     private final IntBuffer indices;
     private final int indexCount;
+
+
+    // vertex shader
     private static final String vertexShaderSource = """
             #version 330 core
             
@@ -24,6 +36,7 @@ public class Triangle {
             
             """;
 
+    // fragment shader
     private static final String fragmentShaderSource = """
             #version 330 core
             
@@ -38,6 +51,8 @@ public class Triangle {
             
             """;
 
+
+    // helper funtion
     public static String returnVS(){
         return vertexShaderSource;
     }
@@ -81,6 +96,9 @@ public class Triangle {
         indexCount = inds.length;
     }
 
+
+    
+    // more helper funtion
     public FloatBuffer getVertices() {
         return vertices;
     }
